@@ -1,0 +1,26 @@
+package layouts;
+
+import "github.com/huemmerj/TourneyShare/components"
+import "github.com/huemmerj/TourneyShare/middleware"
+
+templ Default(content templ.Component) {
+	if ctx.Value(middleware.IsHxRequest) == "true" {
+		<html>
+		    <head>
+			<meta name="viewport" content="width=device-width, initial-scale=1.0">
+			<link href="dist/tailwind.css" rel="stylesheet"></link>
+			<title>My Page</title>
+			<script src="https://unpkg.com/htmx.org@2.0.0"></script>
+			<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+		    </head>
+		    <body class="bg-primary text-text">
+			<div id="main" class="px-3">
+				@content
+			</div>
+			@components.Footer()
+		    </body>
+		</html>
+	} else {
+		@content
+	}
+}

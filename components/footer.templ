@@ -1,0 +1,11 @@
+package components
+
+templ Footer () {
+<div class="text-text1 bg-background fixed flex flex-row bottom-0 w-full pt-2 pb-2">
+	@FooterItem( "About", "/about")
+	<a hx-boost="true" href="/addExercise">
+		<button>Hallo</button>
+	</a>
+	@FooterItem( "Exercises", "/")
+</div>
+}

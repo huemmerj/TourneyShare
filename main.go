@@ -7,6 +7,7 @@ import (
 	"net/http"
 
 	"github.com/gorilla/mux"
+	"github.com/huemmerj/TourneyShare/db"
 	"github.com/huemmerj/TourneyShare/handlers"
 	"os"
 )
@@ -23,11 +24,14 @@ func main() {
 	if err != nil {
 		log.Fatal("Error loading .env file")
 	}
+	db.InitMongoDB()
 	fs := http.FileServer(http.Dir("./dist"))
 	r.PathPrefix("/dist/").Handler(http.StripPrefix("/dist/", fs))
 	// start server and log error
 
 	r.Handle("/", handlers.HomeHandler())
+	r.Handle("/addTournament", handlers.AddTournamentHandler()).Methods("GET")
+	r.HandleFunc("/addTournament", handlers.AddTournamentSubmitHandler).Methods("POST")
 	port := os.Getenv("PORT")
 	if port == "" {
 		port = "8081"

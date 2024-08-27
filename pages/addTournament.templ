@@ -1,0 +1,18 @@
+package pages
+
+templ AddTournament() {
+	<form hx-boost="true" action="/addTournament" method="post" hx-target="#main">
+		<div>
+			<label for="name">Name:</label>
+			<input class="bg-secondary" type="text" id="name" name="name" required>
+		</div>
+		<div>
+			<label for="size">Team Size:</label>
+			<input class="bg-secondary" type="number" id="size" name="teamSize" required>
+		</div>
+		<div>
+			<button type="submit">Submit</button>
+		</div>
+	</form>
+}
+

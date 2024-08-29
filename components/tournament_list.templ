@@ -1,0 +1,9 @@
+package components
+import (
+	"github.com/huemmerj/TourneyShare/models"	
+)
+templ TournamentList(tournaments []models.Tournament){
+	for _, tournament := range tournaments {
+		<div> { tournament.Name } </div>
+	}
+}

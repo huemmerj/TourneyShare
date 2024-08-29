@@ -1,5 +1,10 @@
 package pages
 
-templ Home() {
+import (
+	"github.com/huemmerj/TourneyShare/components"
+	"github.com/huemmerj/TourneyShare/models"
+)
+templ Home(tournaments []models.Tournament) {
 	<div>This is the Homepage</div>
+	@components.TournamentList(tournaments)
 }

@@ -9,6 +9,7 @@ import (
 	"github.com/huemmerj/TourneyShare/middleware"
 	"github.com/huemmerj/TourneyShare/models"
 	"github.com/huemmerj/TourneyShare/pages"
+	"go.mongodb.org/mongo-driver/bson"
 	"log"
 	"net/http"
 	"strconv"
@@ -19,9 +20,21 @@ func AddTournamentHandler() http.Handler {
 }
 
 func AddTournamentSubmitHandler(w http.ResponseWriter, r *http.Request) {
-	handler := middleware.Layout(templ.Handler(layouts.Default(pages.Home())))
+	db := db.GetDB()
+	coll := db.Collection("tournament")
 
-	err := r.ParseForm()
+	cursor, err := coll.Find(context.TODO(), bson.M{})
+	if err != nil {
+		log.Fatal(err)
+	}
+	var tournaments []models.Tournament
+	if err = cursor.All(context.TODO(), &tournaments); err != nil {
+		log.Fatal(err)
+	}
+
+	handler := middleware.Layout(templ.Handler(layouts.Default(pages.Home(tournaments))))
+
+	err = r.ParseForm()
 	if err != nil {
 		log.Fatal("Unable to parse form")
 		http.Error(w, "Unable to parse form", http.StatusBadRequest)
@@ -34,9 +47,6 @@ func AddTournamentSubmitHandler(w http.ResponseWriter, r *http.Request) {
 
 	log.Print(name)
 	log.Print(teamSize)
-
-	db := db.GetDB()
-	coll := db.Collection("tournament")
 
 	newTournament := models.Tournament{Name: name, TeamSize: teamSize}
 	results, err := coll.InsertOne(context.TODO(), newTournament)

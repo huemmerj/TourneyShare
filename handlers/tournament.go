@@ -2,8 +2,8 @@ package handlers
 
 import (
 	"context"
-	"fmt"
 	"github.com/a-h/templ"
+	"github.com/huemmerj/TourneyShare/controllers"
 	"github.com/huemmerj/TourneyShare/db"
 	"github.com/huemmerj/TourneyShare/layouts"
 	"github.com/huemmerj/TourneyShare/middleware"
@@ -15,6 +15,10 @@ import (
 	"strconv"
 )
 
+func TournamentOverviewHandler() http.Handler {
+	tournament := controllers.GetTournament("6703eb1bddbe24d809aab030")
+	return middleware.Layout(templ.Handler(layouts.Default(pages.TournamentOverview(tournament))))
+}
 func AddTournamentHandler() http.Handler {
 	return middleware.Layout(templ.Handler(layouts.Default(pages.AddTournament())))
 }
@@ -34,17 +38,14 @@ func AddTournamentSubmitHandler(w http.ResponseWriter, r *http.Request) {
 	}
 	name := r.FormValue("name")
 
+	publicId, err := controllers.GenerateUniqueID()
+	log.Println(publicId)
 	log.Print(name)
 	log.Print(teamSize)
 
-	newTournament := models.Tournament{Name: name, TeamSize: teamSize}
-	results, err := coll.InsertOne(context.TODO(), newTournament)
+	newTournament := models.Tournament{Name: name, TeamSize: teamSize, PublicId: publicId}
 
-	if err != nil {
-		log.Fatal(err)
-	}
-
-	fmt.Print(results)
+	controllers.CreateTournament(newTournament)
 	cursor, err := coll.Find(context.TODO(), bson.M{})
 	if err != nil {
 		log.Fatal(err)
@@ -56,9 +57,8 @@ func AddTournamentSubmitHandler(w http.ResponseWriter, r *http.Request) {
 
 	handler := middleware.Layout(templ.Handler(layouts.Default(pages.Home(tournaments))))
 
-
 	if handler != nil {
-		w.Header().Set("HX-Push-Url", "/new-page")
+		w.Header().Set("HX-Push-Url", "/")
 		handler.ServeHTTP(w, r)
 	}
 }

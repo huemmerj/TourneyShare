@@ -32,6 +32,7 @@ func main() {
 	r.Handle("/", handlers.HomeHandler())
 	r.Handle("/addTournament", handlers.AddTournamentHandler()).Methods("GET")
 	r.HandleFunc("/addTournament", handlers.AddTournamentSubmitHandler).Methods("POST")
+	r.Handle("/tournament_overview/{id}", handlers.TournamentOverviewHandler()).Methods("GET")
 	port := os.Getenv("PORT")
 	if port == "" {
 		port = "8081"

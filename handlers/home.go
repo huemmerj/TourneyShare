@@ -22,6 +22,9 @@ func HomeHandler() http.Handler {
 		log.Fatal(err)
 	}
 	var tournaments []models.Tournament
+	for _, tournament := range tournaments {
+		log.Printf("Tournament: %+v\n", tournament)
+	}
 	if err = cursor.All(context.TODO(), &tournaments); err != nil {
 		log.Fatal(err)
 	}

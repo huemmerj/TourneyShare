@@ -23,18 +23,7 @@ func AddTournamentSubmitHandler(w http.ResponseWriter, r *http.Request) {
 	db := db.GetDB()
 	coll := db.Collection("tournament")
 
-	cursor, err := coll.Find(context.TODO(), bson.M{})
-	if err != nil {
-		log.Fatal(err)
-	}
-	var tournaments []models.Tournament
-	if err = cursor.All(context.TODO(), &tournaments); err != nil {
-		log.Fatal(err)
-	}
-
-	handler := middleware.Layout(templ.Handler(layouts.Default(pages.Home(tournaments))))
-
-	err = r.ParseForm()
+	err := r.ParseForm()
 	if err != nil {
 		log.Fatal("Unable to parse form")
 		http.Error(w, "Unable to parse form", http.StatusBadRequest)
@@ -56,8 +45,20 @@ func AddTournamentSubmitHandler(w http.ResponseWriter, r *http.Request) {
 	}
 
 	fmt.Print(results)
+	cursor, err := coll.Find(context.TODO(), bson.M{})
+	if err != nil {
+		log.Fatal(err)
+	}
+	var tournaments []models.Tournament
+	if err = cursor.All(context.TODO(), &tournaments); err != nil {
+		log.Fatal(err)
+	}
+
+	handler := middleware.Layout(templ.Handler(layouts.Default(pages.Home(tournaments))))
+
+
 	if handler != nil {
-		fmt.Print("hallo")
+		w.Header().Set("HX-Push-Url", "/new-page")
 		handler.ServeHTTP(w, r)
 	}
 }

@@ -5,6 +5,7 @@ module.exports = {
 		extend: {
 			colors: {
 				// Custom dark mode colors
+				accent: '#BB86FC',
 				text: '#eaeaea',
 				primary: '#22242C',
 				secondary: '#32343D',

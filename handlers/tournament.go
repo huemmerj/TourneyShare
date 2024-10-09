@@ -3,6 +3,7 @@ package handlers
 import (
 	"context"
 	"github.com/a-h/templ"
+	"github.com/gorilla/mux"
 	"github.com/huemmerj/TourneyShare/controllers"
 	"github.com/huemmerj/TourneyShare/db"
 	"github.com/huemmerj/TourneyShare/layouts"
@@ -15,9 +16,24 @@ import (
 	"strconv"
 )
 
-func TournamentOverviewHandler() http.Handler {
-	tournament := controllers.GetTournament("6703eb1bddbe24d809aab030")
-	return middleware.Layout(templ.Handler(layouts.Default(pages.TournamentOverview(tournament))))
+func TournamentOverviewHandler(w http.ResponseWriter, r *http.Request) {
+	vars := mux.Vars(r)
+	publicId := vars["id"]
+
+	tournament := controllers.GetTournament(publicId)
+	log.Print(tournament.Name)
+	handler := middleware.Layout(templ.Handler(layouts.Default(pages.TournamentOverview(tournament))))
+	handler.ServeHTTP(w, r)
+}
+func AddTeam(w http.ResponseWriter, r *http.Request) {
+	log.Print(r)
+	err := r.ParseForm()
+	if err != nil {
+		log.Fatal("Unable to parse form")
+		http.Error(w, "Unable to parse form", http.StatusBadRequest)
+	}
+	log.Println("hallo")
+	log.Print(r.FormValue("fixedValue"))
 }
 func AddTournamentHandler() http.Handler {
 	return middleware.Layout(templ.Handler(layouts.Default(pages.AddTournament())))

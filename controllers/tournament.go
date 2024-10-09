@@ -18,7 +18,7 @@ func GetTournament(id string) models.Tournament {
 	var tournament models.Tournament
 
 	// Create a filter for the tournament with the given ID
-	filter := bson.M{"_id": id}
+	filter := bson.M{"public_id": id}
 
 	err := coll.FindOne(context.TODO(), filter).Decode(&tournament)
 	if err != nil {

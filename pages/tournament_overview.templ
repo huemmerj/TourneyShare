@@ -4,5 +4,13 @@ import (
 	"github.com/huemmerj/TourneyShare/models"
 )
 templ TournamentOverview(tournament models.Tournament) {
-	<div>Turnierübersicht</div>
+	<h1 class="text-xl">{tournament.Name}</h1>
+	<form hx-boost="true" action="/addTeam"  method="post" hx-target="#main">
+		<h2>Team Hinzufügen</h2>
+		<div class="flex flex-row gap-3">
+			<input type="hidden" name="fixedValue" value={tournament.PublicId}>
+			<input class="bg-secondary p-3" type="text" id="name" name="name" required>
+			<button class="bg-accent text-white rounded p-2 hover:bg-accent" type="submit">Save</button>
+		</div>
+	</form>
 }

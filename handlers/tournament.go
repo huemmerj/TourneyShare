@@ -34,6 +34,10 @@ func AddTeam(w http.ResponseWriter, r *http.Request) {
 	}
 	log.Println("hallo")
 	log.Print(r.FormValue("fixedValue"))
+	log.Print(r.FormValue("name"))
+
+	newTeam := models.Team{Name: r.FormValue("name")}
+	controllers.AddTeamToTournament(r.FormValue("fixedValue"), newTeam)
 }
 func AddTournamentHandler() http.Handler {
 	return middleware.Layout(templ.Handler(layouts.Default(pages.AddTournament())))
@@ -59,7 +63,7 @@ func AddTournamentSubmitHandler(w http.ResponseWriter, r *http.Request) {
 	log.Print(name)
 	log.Print(teamSize)
 
-	newTournament := models.Tournament{Name: name, TeamSize: teamSize, PublicId: publicId}
+	newTournament := models.Tournament{Name: name, TeamSize: teamSize, PublicId: publicId, Team: []models.Team{}}
 
 	controllers.CreateTournament(newTournament)
 	cursor, err := coll.Find(context.TODO(), bson.M{})

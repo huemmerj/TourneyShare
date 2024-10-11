@@ -5,4 +5,5 @@ type Tournament struct {
 	Name     string `bson:"name"`
 	TeamSize int    `bson:"team_size"`
 	PublicId string `bson:"public_id"`
+	Team     []Team `bson:"teams"`
 }

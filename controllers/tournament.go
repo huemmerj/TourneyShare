@@ -77,3 +77,27 @@ func GenerateUniqueID() (string, error) {
 		// Otherwise, loop again to generate a new ID
 	}
 }
+func AddTeamToTournament(publicId string, team models.Team) {
+	db := db.GetDB()
+	coll := db.Collection("tournament")
+	filter := bson.M{"public_id": publicId}
+
+	var tournament models.Tournament
+	err := coll.FindOne(context.TODO(), filter).Decode(&tournament)
+	if err != nil {
+		log.Printf("failed to find tournament with publicId %s: %v", publicId, err)
+	}
+	log.Println(tournament.Id)
+	filter = bson.M{"_id": tournament.Id}
+	update := bson.M{
+		"$push": bson.M{"teams": team},
+	}
+	log.Println(tournament)
+
+	_, err = coll.UpdateOne(context.TODO(), filter, update)
+	if err != nil {
+		log.Printf("failed to add team to tournament: %v", err)
+	}
+	log.Printf("team added")
+
+}

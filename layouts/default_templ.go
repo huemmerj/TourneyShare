@@ -33,7 +33,7 @@ func Default(content templ.Component) templ.Component {
 		}
 		ctx = templ.ClearChildren(ctx)
 		if ctx.Value(middleware.IsHxRequest) == "true" {
-			templ_7745c5c3_Err = templ.WriteWatchModeString(templ_7745c5c3_Buffer, 1)
+			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("<html><head><meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\"><link href=\"/dist/tailwind.css\" rel=\"stylesheet\"><title>My Page</title><script src=\"https://unpkg.com/htmx.org@2.0.0\"></script><link href=\"https://fonts.googleapis.com/icon?family=Material+Icons\" rel=\"stylesheet\"><link rel=\"stylesheet\" href=\"https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200\"><style>\n.material-symbols-outlined {\n  font-variation-settings:\n  'FILL' 0,\n  'wght' 200,\n  'GRAD' 0,\n  'opsz' 24\n}\n</style></head><body class=\"bg-primary text-text\"><div id=\"main\" class=\"px-3\">")
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
@@ -41,7 +41,7 @@ func Default(content templ.Component) templ.Component {
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
-			templ_7745c5c3_Err = templ.WriteWatchModeString(templ_7745c5c3_Buffer, 2)
+			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("</div>")
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
@@ -49,7 +49,7 @@ func Default(content templ.Component) templ.Component {
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
-			templ_7745c5c3_Err = templ.WriteWatchModeString(templ_7745c5c3_Buffer, 3)
+			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("</body></html>")
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}

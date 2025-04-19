@@ -1,0 +1,26 @@
+# Specify the main Go file to run your project
+cmd = "go run main.go"
+
+# Delay for reloading the application (optional, default is 1000ms)
+delay = 1000
+
+# Include these file types for watching (all others will be ignored)
+include_ext = ["go", "tpl", "tmpl", "html", "templ"]
+
+# Exclude specific folders from watching (optional)
+exclude_dir = ["vendor", "tmp", "node_modules", "dist", "public"]
+
+# Commands to run before building the project
+pre_build = "templ generate"
+
+# Build flags (optional)
+build_args = ["-tags=air"]
+
+# Build the binary in the directory (optional)
+bin = "tmp/main"
+
+# Full command to run after building
+full_bin = "go run tmp/main"
+
+# Keep running old process if the build fails (default is false)
+kill_old = false

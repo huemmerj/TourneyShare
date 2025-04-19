@@ -29,7 +29,7 @@ func AddTournament() templ.Component {
 			templ_7745c5c3_Var1 = templ.NopComponent
 		}
 		ctx = templ.ClearChildren(ctx)
-		templ_7745c5c3_Err = templ.WriteWatchModeString(templ_7745c5c3_Buffer, 1)
+		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("<form hx-boost=\"true\" action=\"/addTournament\" method=\"post\" hx-target=\"#main\"><div><label for=\"name\">Name:</label> <input class=\"bg-secondary\" type=\"text\" id=\"name\" name=\"name\" required></div><div><label for=\"size\">Team Size:</label> <input class=\"bg-secondary\" type=\"number\" id=\"size\" name=\"teamSize\" required></div><div><button type=\"submit\">Submit</button></div></form>")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}

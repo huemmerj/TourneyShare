@@ -1,3 +1,0 @@
-<button hx-get=\"
-\" hx-target=\"#main\" hx-push-url=\"true\"><span class=\"material-symbols-outlined\" style=\"font-size: 4em; \">
-</span></button>

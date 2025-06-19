@@ -39,6 +39,7 @@ func AddTeam(w http.ResponseWriter, r *http.Request) {
 	newTeam := models.Team{Name: r.FormValue("name")}
 	controllers.AddTeamToTournament(r.FormValue("fixedValue"), newTeam)
 }
+
 func AddTournamentHandler() http.Handler {
 	return middleware.Layout(templ.Handler(layouts.Default(pages.AddTournament())))
 }

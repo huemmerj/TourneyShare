@@ -2,14 +2,16 @@ package main
 
 import (
 	"fmt"
-	"github.com/joho/godotenv"
 	"log"
 	"net/http"
+
+	"github.com/joho/godotenv"
+
+	"os"
 
 	"github.com/gorilla/mux"
 	"github.com/huemmerj/TourneyShare/db"
 	"github.com/huemmerj/TourneyShare/handlers"
-	"os"
 )
 
 func SetHeader(header, value string, handle http.Handler) func(http.ResponseWriter, *http.Request) {
